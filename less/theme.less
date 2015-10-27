@@ -1,0 +1,357 @@
+/*
+
+Stylesheet
+----------
+
+Project:	Title
+Date:		00/00/00
+
+----------
+
+Table of Contents
+-----------------
+
+1. Core
+2. Layout
+3. Sections
+4. Variations
+
+----------
+
+Directions: Use either the drupal prefixed plugins or the no prefix plugins. Don't use both
+as there is a lot of overlap between the two.
+
+----------
+
+*/
+
+
+@background: #fff;
+@footerbackground:#e6e6e6;
+
+@accent: #004236;
+@pop: #f49c51;
+@linkcolor: #47639e;
+@linkhover: #000;
+
+@screen: #f2f2f2;
+@linecolor: #ddd;
+@selection: fadeout(@linkcolor, 20%);
+
+@formlinecolor: darken(@linecolor, 10%);
+@formlinefocus: @accent;
+
+@color: #333;
+@light: #999;
+@font: "Karla", sans-serif;
+@altfont: @font;
+@heading: @altfont;
+@size: 18px;
+@fontScale: 1.5; // Used for line-height, margin, etc.
+@lineheight:unit(@fontScale, em);
+@fontweightnormal:400;
+@fontweightbold:700;
+
+@menubackgroundcolor: #fff;
+@menulinkcolor: @light;
+@menuline: @linecolor;
+
+@maxwidth: 1240px;
+@minwidth: 300px;
+@gutter:2em;
+@totalcol:12;
+
+@breakpoint: 640px; // point at which columns stack
+@breakpoint-sm: @breakpoint; // point at which columns stack
+@breakpoint-md: 1024px; // point at which columns stack
+
+/*
+1. Core
+-------
+*/
+
+// pull in core, type, and form plugins
+@import "plugins/core.less";
+@import "plugins/type.less";
+@import "plugins/forms.less";
+
+body {
+	background-color:@footerbackground; // footer color set here
+}
+
+/*
+2. Layout
+---------
+*/
+
+// pull in grid
+@import "plugins/grid.less";
+
+#site-header {
+	position:fixed;
+	z-index:1;
+	top:0;
+	left:0;
+	right:0;
+	padding:1em 0;
+	background-color:#fff;
+	#drawer-link {
+		float:left;
+		display:none;
+		@media only screen and (max-width:@breakpoint) {
+			display:block;
+		}
+	}
+	.transition;
+}
+body.admin-bar #site-header {
+	top:32px;
+}
+body.splash #site-header {
+	.gradient(rgba(0,0,0,0.5), rgba(0,0,0,0));
+	a {
+		color:#fff;
+		-webkit-text-shadow:0 0 1em fade(#000, 50%);
+		-moz-text-shadow:0 0 1em fade(#000, 50%);
+		-ms-text-shadow:0 0 1em fade(#000, 50%);
+		text-shadow:0 0 1em fade(#000, 50%);
+		.transition;
+	}
+	&.whited {
+		background:#fff none;
+		a {
+			color:@color;
+			-webkit-text-shadow:none;
+			-moz-text-shadow:none;
+			-ms-text-shadow:none;
+			text-shadow:none;
+		}
+		@media only screen and (max-width:@breakpoint) {
+			padding:0.5em 0;
+		}
+	}
+}
+#splash-holder {
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background-color:@accent;
+	color:#fff;
+	a {
+		color:#fff;
+	}
+}
+body.splash #content-wrapper {
+	position:absolute;
+	top:100%;
+	left:0;
+	width:100%;
+}
+#site-header + #content-wrapper {
+	margin-top:6.25em;
+}
+#content-body {
+	padding:3em 0;
+	background-color:@background;
+	color:@color;
+}
+footer {
+	padding:2em 0;
+	color:lighten(@color, 20%);
+	h2 {
+		font-size:1.1em;
+	}
+}
+
+img {
+	max-width:100%;
+	height:auto;
+}
+
+/*
+3. Sections
+-----------
+*/
+
+#drawer-link a {
+	color:@color;
+	position:relative;
+	top:0.35em;
+	margin-right:0.5em;
+	.text {
+		.accessible-hide;
+	}
+}
+
+#splash-holder {
+	background-image:url(../img/forest-grass-lawn-1826.jpg);
+	background-size:cover;
+	background-position:center 0;
+}
+
+#site-title {
+	margin-bottom:0;
+	font-size:1.5em;
+	a {
+		color:@color;
+		text-decoration:none;
+	}
+}
+
+// nav
+#nav-holder {
+	ul.menu {
+		margin:0;
+		padding:0.2em 0;
+		li {
+			margin:0 1em 0 0;
+			padding:0;
+			display:inline;
+			list-style:none;
+			a {
+				color:@menulinkcolor;
+				text-decoration:none;
+				&:hover {
+					text-decoration:underline;
+				}
+				&.active {
+					font-weight:@fontweightbold;
+				}
+			}
+		}
+	}
+}
+@media only screen and (max-width:@breakpoint) {
+	#nav-holder {
+		display:none;
+	}
+}
+.whited #nav-holder ul.menu li a {
+	color:@menulinkcolor;
+	&:hover {
+		color:darken(@menulinkcolor, 20%);
+	}
+}
+
+.listing h1 {
+	margin-bottom:@lineheight;
+}
+
+article {
+	.content {
+		max-width:724px;
+	}
+}
+
+article.listed {
+	margin-bottom:(3*@lineheight);
+}
+article.post.listed {
+	&:after {
+		content:" ";
+		display:block;
+		max-width:(@breakpoint/2);
+		height:0;
+		border-top:1px solid @linecolor;
+	}
+}
+
+.article-image {
+	position:relative;
+	.overlay {
+		position:absolute;
+		bottom:0;
+		left:1em;
+		right:1em;
+		color:#fff;
+		-webkit-text-shadow:0 0 1.5em fade(#000, 50%);
+		-moz-text-shadow:0 0 1.5em fade(#000, 50%);
+		-ms-text-shadow:0 0 1.5em fade(#000, 50%);
+		text-shadow:0 0 1.5em fade(#000, 50%);
+		a {
+			color:#fff;
+		}
+		h2 a {
+			text-decoration:none;
+		}
+		.transition(all, 0.15s);
+	}
+	&:hover {
+		.overlay {
+			bottom:-1em;
+			opacity:0.3;
+		}
+	}
+}
+
+@photoGridBaseHeight:10em;
+#photo-grid {
+	.photo-item {
+		margin-bottom:@lineheight;
+		background-repeat:no-repeat;
+		background-position:center center;
+		.transition;
+		img {	
+			.transition;
+		}
+	}
+	.photo-item.loading {
+		height:10em;
+		background-image:url(../img/loader.gif);
+		overflow:hidden;
+		img {
+			opacity:0;
+		}
+	}
+	@media only screen and (max-width:@breakpoint-md) {
+		.photo-item.g3 {
+			width:33.3334%;
+		}
+	}
+	@media only screen and (max-width:@breakpoint) {
+		.photo-item.g3 {
+			float:left;
+			width:50%;
+		}
+	}
+}
+
+ul.photo-block-list {
+	padding:0;
+	margin:0 -0.25em @lineheight -0.25em;
+	li {
+		display:block;
+		margin:0;
+		padding:0.25em;
+		list-style:none;
+		float:left;
+		width:25%;
+		.border-box;
+	}
+	&:after {
+		.clearfixed;
+	}
+}
+
+.image-placeholder {
+	background-color:lighten(@light, 5%);
+	text-align:center;
+	padding:1em 0;
+	color:#ccc;
+}
+
+// third parties
+@import "plugins/flexslider/flexslider.less";
+
+/*
+4. Variations
+-------------
+*/
+
+// pull in classes
+@import "plugins/classes.less";
+
+// pull in animations
+@import "plugins/animations.less";

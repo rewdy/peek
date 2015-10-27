@@ -1,0 +1,157 @@
+/* Type + Tags */
+
+body {
+	font-family:@font;
+	font-size:@size;
+	line-height:@lineheight;
+	-webkit-font-smoothing:antialiased;
+	-moz-font-smoothing:antialiased;
+	-ms-font-smoothing:antialiased;
+	font-smoothing:antialiased;
+}
+h1, h2, h3, h4, h5, h6, #site-title {
+	margin:0.2em 0 0.5em 0;
+	line-height:unit(@fontScale*0.93, em);
+	font-family:@heading;
+	font-weight:@fontweightbold;
+	font-size:1em;
+	a {
+		color:inherit;
+		text-decoration:none;
+		&:hover {
+			text-decoration:underline;
+		}
+	}
+}
+
+h1,
+#site-title {
+	font-size:2em;
+	font-family:@heading;
+	font-weight:@fontweightbold;
+	@media only screen and (max-width:@breakpoint) {
+		font-size:2.5em;
+	}
+}
+h2 {
+	font-size:1.4em;
+}
+h3 {
+	font-size:1.2em;
+}
+h4 {
+	font-size:1.1em;
+}
+h5 {
+	font-size:1em;
+	font-style:italic;
+}
+h6 {
+	font-size:0.85em;
+	font-style:italic;
+}
+
+p, ul, ol, blockquote, pre, table, address {
+	margin:0 0 @lineheight 0;
+}
+
+ul li,
+ol li {
+	margin-left:unit(@fontScale*2, em);
+}
+
+table {
+	width:100%;
+	border-collapse:collapse;
+	caption {
+		font-style:italic;
+	}
+	tr {
+		th, td {
+			padding:0.4em 0.5em 0.4em 0.2em;
+			margin:0;
+			border-bottom:1px solid @linecolor;
+		}
+		th {
+			text-align: left;
+			border-bottom-color:@linecolor;
+			font-weight:@fontweightbold;
+		}
+		&:nth-child(odd) {
+			td {
+				background-color:#f2f2f2;
+			}
+		}
+	}
+}
+table.inline {
+	width:auto;
+}
+
+blockquote {
+	padding:0.5em 0.8em;
+	font-size:1.2em;
+	font-style:italic;
+	line-height:@lineheight;
+	background-color:@screen;
+}
+code, pre {
+	font-size:0.9em;
+	padding:0.2em;
+	background-color:@screen;
+}
+pre {
+	padding:0.5em 0.8em;
+	white-space: pre-wrap;
+	-webkit-tab-size:4;
+	-moz-tab-size:4;
+	-ms-tab-size:4;
+	tab-size:4;
+}
+
+acronym, abbr {
+	border-bottom:1px dotted @light;
+	cursor:help;
+}
+
+figure {
+	float:left;
+	border:1px solid @linecolor;
+	padding:0.5em;
+	margin:0 0 @lineheight 0;
+	+ * {
+		clear:left;
+	}
+}
+figcaption {
+	font-size:0.9em;
+	font-style:italic;
+	text-align:center;
+}
+
+hr {
+	margin:@lineheight 0;
+	border-top:1px solid @linecolor;
+	&.thick {
+		margin:(2*@lineheight) 0;
+	}
+	&.short {
+		margin:(@lineheight/3) 0;
+	}
+}
+
+a {
+	color: @linkcolor;
+	&:hover {
+		color:@linkhover;
+	}
+}
+
+.screen-reader-text {
+	position:absolute;
+	top:0;
+	left:0;
+	height:0;
+	width:0;
+	overflow:hidden;
+}

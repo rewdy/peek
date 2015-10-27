@@ -1,0 +1,135 @@
+// Classes
+
+.attn {
+	font-family:@altfont;
+	font-weight:400;
+	font-size:1.3em;
+	line-height:@lineheight;
+}
+.box {
+	background-color:@screen;
+	padding:1em;
+	margin-bottom:@lineheight;
+	> *:last-child {
+		margin-bottom:0;
+	}
+}
+.text-right,
+.text-right-d {
+	text-align:right;
+}
+.text-left,
+.text-left-d {
+	text-align:left;
+}
+.text-center,
+.text-center-d {
+	text-align:center;
+}
+
+@media only screen and (max-width:@breakpoint) {
+	.text-right-d {
+		text-align:left;
+	}
+	.text-left-d {
+		text-align:left;
+	}
+	.text-center-d {
+		text-align:left;
+	}
+	.text-right-m {
+		text-align:right;
+	}
+	.text-left-m {
+		text-align:left;
+	}
+	.text-center-m {
+		text-align:center;
+	}
+}
+
+ul.lined,
+ol.lined {
+	border-top: 1px solid #ddd;
+}
+ul.lined li {
+	list-style: none;
+	margin:0;
+	padding:0.4em;
+	border-bottom:1px solid #ddd;
+}
+ol.lined li {
+	list-style-position: inside;
+	margin:0;
+	padding:0.4em;
+	border-bottom:1px solid #ddd;
+}
+
+ul.inline,
+ol.inline {
+	padding:0;
+	li {
+		display:inline;
+		list-style:none;
+		margin:0 1em 0 0;
+		padding:0;
+	}
+}
+
+img.right {
+	float: right;
+	margin: 0 0 0.5em 0.5em;
+	text-align: center;
+}
+img.left {
+	float: left;
+	margin: 0 0.5em 0.5em 0;
+	text-align: center;
+}
+table.narrow {
+	width: auto;
+}
+
+.show-mobile {
+	display:none;
+}
+@media only screen and (max-width:@breakpoint) {
+	.show-mobile {
+		display:block;
+	}
+	span.show-mobile,
+	i.show-mobile {
+		display:inline;
+	}
+	.show-big {
+		display:none;
+	}
+}
+
+.accessible-hide,
+.assistive-text {
+	position:absolute;
+	top:0;
+	left:0;
+	width:0;
+	height:0;
+	overflow:hidden;
+}
+
+// mixins
+.transition(@selection: all, @duration: 0.3s, @easing: ease-out) {
+	-webkit-transition:@selection @duration @easing;
+	-moz-transition:@selection @duration @easing;
+	-ms-transition:@selection @duration @easing;
+	transition:@selection @duration @easing;
+}
+.gradient(@start, @stop, @startpos: 0%, @stoppos: 100%) {
+	background: @start; /* Old browsers */
+	background: -moz-linear-gradient(top, @start @startpos, @stop @stoppos); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@start), color-stop(100%,@stop)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, @start @startpos,@stop @stoppos); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, @start @startpos,@stop @stoppos); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, @start @startpos,@stop @stoppos); /* IE10+ */
+	background: linear-gradient(to bottom, @start @startpos,@stop @stoppos); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@start', endColorstr='@stop',GradientType=0 ); /* IE6-9 */
+}

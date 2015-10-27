@@ -1,0 +1,11 @@
+/*
+Theme Name: Peek
+Theme URI: http://rewdy.com/project/peek
+Author: Andrew Meyer
+Author URI: http://rewdy.com
+Description: A theme for photography websites.
+Version: 1.0
+*/
+
+@import url(lib/font-awesome-4.1.0/css/font-awesome.min.css);
+@import url(css/theme.css);
