@@ -5,7 +5,7 @@ Peek Theme
 
 header.php
 
-Header template file	
+Header template file
 
 */
 
@@ -50,7 +50,7 @@ if (is_active_sidebar('splash') && is_front_page()) {
 			wp_enqueue_style('photoswipe', get_template_directory_uri() . '/lib/photoswipe/photoswipe.css', array(), false, 'screen');
 			wp_enqueue_style('photoswipe_ui', get_template_directory_uri() . '/lib/photoswipe/default-skin/default-skin.css', array(), false, 'screen');
 		}
-		
+
 		// Javascript
 
 		// pull in the jQuery
@@ -59,31 +59,28 @@ if (is_active_sidebar('splash') && is_front_page()) {
 		// pull in the site js
 		wp_enqueue_script('peek_interactions', get_template_directory_uri() . '/js/peek-interactions.js', 'jquery', false, true);
 		wp_enqueue_script('peek_animations', get_template_directory_uri() . '/js/peek-animations.js', 'jquery', false, true);
-		
+
 		if (is_single()) {
 			wp_enqueue_script('photoswipe_js', get_template_directory_uri() . '/lib/photoswipe/photoswipe.min.js', array(), false, true);
 			wp_enqueue_script('photoswipe_ui_js', get_template_directory_uri() . '/lib/photoswipe/photoswipe-ui-default.min.js', array(), false, true);
 		}
-		
+
 		// comment script
 		if (is_singular() && get_option('thread_comments')) :
 			wp_enqueue_script('comment-reply');
 		endif;
 		?>
 
-		<?php 
+		<?php
 		// Wordpress header content
 		wp_head(); ?>
-		
+
 	</head>
 	<body class="<?php echo implode(' ', $body_class); ?>">
 
 		<header id="site-header">
 			<div class="grid">
 				<div class="g12">
-					<!-- <div id="site-logo">
-						<i class="fa fa-anchor fa-4x"></i>
-					</div> -->
 					<nav id="nav-holder" role="navigation">
 						<div class="assistive-text">Main menu</div>
 						<?php

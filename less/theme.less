@@ -206,11 +206,15 @@ img {
 		margin:0;
 		padding:0.2em 0;
 		li {
-			margin:0 1em 0 0;
+			margin:0 0.5em 0 0;
 			padding:0;
-			display:inline;
+			display:inline-block;
 			list-style:none;
+			position:relative;
+			z-index:1;
 			a {
+				display:inline-block;
+				padding:0.25em;
 				color:@menulinkcolor;
 				text-decoration:none;
 				&:hover {
@@ -219,6 +223,39 @@ img {
 				&.active {
 					font-weight:@fontweightbold;
 				}
+			}
+			ul {
+				// consistent styles
+				position:absolute;
+				top:100%;
+				left:-0.5em;
+				min-width:200px;
+				z-index:10;
+				box-shadow:0 0.5em 0.5em fade(@color, 10%);
+				background-color:@menubackgroundcolor;
+				// animated styles
+				display:none;
+				opacity:0;
+				transform:translateY(0);
+				// .transition;
+				animation:show-and-slide-down 300ms ease-out;
+				li {
+					margin:0;
+					display:block;
+					a {
+						display:block;
+						padding:0.5em;
+						&:hover {
+							color:@color;
+							background-color:darken(@menubackgroundcolor, 8%);
+						}
+					}
+				}
+			}
+			&:hover ul {
+				display:block;
+				opacity:1;
+				transform:translateY(0);
 			}
 		}
 	}
@@ -292,8 +329,9 @@ article.post.listed {
 		margin-bottom:@lineheight;
 		background-repeat:no-repeat;
 		background-position:center center;
+		text-align:center;
 		.transition;
-		img {	
+		img {
 			.transition;
 		}
 	}

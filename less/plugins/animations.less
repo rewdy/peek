@@ -52,3 +52,21 @@
 		transform:scale(2)
 	}
 }
+
+@keyframes show-and-slide-down {
+	0% {
+		opacity:0;
+		display:none;
+		transform:translateY(-2em) scale(0.8);
+	}
+	1% {
+		opacity:0;
+		display:block;
+		transform:translateY(-2em) scale(0.8);
+	}
+	100% {
+		opacity:1;
+		display:block;
+		transform:translateY(0) scale(1);
+	}
+}
