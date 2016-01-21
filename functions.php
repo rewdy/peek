@@ -5,7 +5,7 @@ Peek Theme
 
 functions.php
 
-Functions file	
+Functions file
 
 */
 
@@ -52,7 +52,7 @@ function peek_widget_init() {
 			'after_title' => '</h2>'
 		)
 	);
-	
+
 	// Register footer widgets
 	register_sidebar(
 		array(
@@ -68,54 +68,9 @@ function peek_widget_init() {
 }
 add_action('widgets_init', 'peek_widget_init');
 
-/**
- * Custom Post Types
- */
-// function create_post_type() {
-// 	// set labels
-// 	$labels = array(
-// 		'name'				=> __('Resources'),
-// 		'singular_name'		=> __('Resource'),
-// 		'menu_name'			=> __('Resource'),
-// 		'parent_item_colon' => __('Parent Resource:'),
-// 		'all_items'			=> __('All Resources'),
-// 		'view_item'			=> __('View Resource'),
-// 		'add_new_item'		=> __('Add New Resource'),
-// 		'add_new'			=> __('New Resource'),
-// 		'edit_item'			=> __('Edit Resource'),
-// 		'update_item'		=> __('Update Resource'),
-// 		'search_items'		=> __('Search resources'),
-// 		'not_found'			=> __('No resources found'),
-// 		'not_found_in_trash'=> __('No resources found in Trash'),
-// 	);
-
-// 	// setup args
-// 	$args = array(
-// 		'labels' 			=> $labels,
-// 		'supports' 			=> array('title', 'editor', 'excerpt', 'thumbnail', 'comments'),
-// 		'menu_position' 	=> 5,
-// 		'public' 			=> true,
-// 		'has_archive' 		=> true,
-// 		'rewrite' 			=> array('slug' => 'resources'),
-// 	);
-
-// 	// make the post type
-// 	register_post_type('peek_resource', $args);
-// }
-// add_action('init', 'create_post_type');
-
-// // Set the limit for resources archive
-// function peek_query_mod($query) {
-// 	if ($query->is_post_type_archive('peek_resource') && !is_admin()) {
-// 		$query->set('posts_per_page', 9);
-// 		return;
-// 	}
-// }
-// add_action('pre_get_posts','peek_query_mod');
-
 
 /**
- * Custom Header Stuff
+ * Custom Settings
  */
 
 // Custom Header Image
@@ -153,7 +108,45 @@ $header_options = array(
 );
 register_default_headers($header_options);
 
+/**
+ * Settings
+ */
+class Peek_Customize {
+	public static function register($wp_customize) {
+		// add the sections
+		$wp_customize->add_section('peek_options',
+			array(
+				'title'			=> __('Display Options', 'peek'),
+				'priority'		=> 55,
+				'capability'	=> 'edit_theme_options',
+				'description' 	=> __('Enable certain features of the theme.', 'peek')
+			)
+		);
 
+		// Lazy load setting
+		$wp_customize->add_setting('peek_use_lazy_load',
+			array(
+				'default' 	=> 1,
+				'type'		=> 'option',
+				'capability'=> 'edit_theme_options',
+				'transport'	=> 'refresh',
+			)
+		);
+		// Lazy load control
+		$wp_customize->add_control('peek_use_lazy_load',
+			array(
+				'label'   => 'Use lazy loading for galleries?',
+				'description' => __('This setting makes it so gallery images only load after the user scrolls to them on the page. This speeds up page load times and reduces bandwidth usage.'),
+				'section' => 'peek_options',
+				'type'    => 'radio',
+				'choices'    => array(
+					1 => 'Yes',
+					0 => 'No',
+				),
+			)
+		);
+	}
+}
 add_action('customize_register', array('Peek_Customize', 'register'));
 
 if (!function_exists('peek_custom_header_image')) :
@@ -161,7 +154,7 @@ if (!function_exists('peek_custom_header_image')) :
 function peek_custom_header_image() {
 
 	$processed = array();
-	
+
 	// get the header image; this is the default.
 	$header_image = get_custom_header();
 
@@ -195,6 +188,17 @@ function peek_featured_image() {
 	return (!empty($image)) ? $image : false;
 }
 
+
+/**
+ * Functions to return values to the theme
+ */
+function peek_lazy_load_enabled() {
+	return get_option('peek_use_lazy_load');
+}
+function peek_lazy_load_holder_src() {
+	return get_template_directory_uri() . '/img/loader.gif';
+}
+
 /**
  * Comment mods because the defaults here suck
  */
@@ -226,7 +230,7 @@ function peek_comment($comment, $args, $depth) {
 				</div>
 				<div class="details">
 					<span class="avatar"><?php if ($args['avatar_size'] != 0) echo get_avatar( $comment, $args['avatar_size'] ); ?></span>
-					<span class="comment-author vcard"><?php printf(__('<span class="says">Posted by</span> <cite class="fn">%s</cite>'), get_comment_author_link()) ?></span> &bullet; 
+					<span class="comment-author vcard"><?php printf(__('<span class="says">Posted by</span> <cite class="fn">%s</cite>'), get_comment_author_link()) ?></span> &bullet;
 					<span class="comment-date"><a href="<?php echo htmlspecialchars(get_comment_link($comment->comment_ID)); ?>"><?php printf(__('%1$s %2$s'), get_comment_date(),  get_comment_time()); ?></a></span>
 				</div>
 
@@ -251,7 +255,7 @@ function peek_comment_form() {
 		'url'	=> '<p class="form-item label-inline comment-form-url"><label for="url">' . __( 'Website' ) . '</label>' .
 		'<span class="input-holder"><input id="url" name="url" type="text" class="text" value="' . esc_attr( $commenter['comment_author_url'] ) . '" size="30" /></span></p>',
 	);
-	
+
 	// build our new defaults array (based off of default defaults. customized values noted.
 	$defaults = array(
 		'fields'			=> apply_filters('comment_form_default_fields', $fields ), /* customized */
@@ -267,7 +271,7 @@ function peek_comment_form() {
 		'cancel_reply_link'		=> __( 'Cancel Comment' ),
 		'label_submit'			=> __( 'Post Comment' )
 	);
-	
+
 	// send them back out! Bam!
 	return $defaults;
 }
@@ -281,7 +285,7 @@ add_filter('comment_form_defaults', 'peek_comment_form');
 function get_attachments_gallery($thumb_type = 'proportional', $include_link = true) {
 	// set image style
 	$image_size = $thumb_type . '-gallery-thumbnail';
-	
+
 	// get the attachements
 	global $post;
 	$images = get_children(array(
@@ -292,7 +296,7 @@ function get_attachments_gallery($thumb_type = 'proportional', $include_link = t
 		'order' => 'ASC',
 		'orderby' => 'menu_order ID',
 	));
-	
+
 	// make the gallery image array
 	$galleryimages = array();
 	if ($images) {
@@ -306,7 +310,7 @@ function get_attachments_gallery($thumb_type = 'proportional', $include_link = t
 			}
 		}
 	}
-	
+
 	// send it back
 	return $galleryimages;
 }

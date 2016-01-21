@@ -5,7 +5,7 @@ Peek Theme
 
 footer.php
 
-Footer template file	
+Footer template file
 
 */
 
@@ -30,8 +30,8 @@ Footer template file
 
 		<?php
 		if (is_single()) {
-			include 'includes/photoswipe_element.php'; 
-		} 
+			include 'includes/photoswipe_element.php';
+		}
 		?>
 
 		<?php wp_footer(); ?>
