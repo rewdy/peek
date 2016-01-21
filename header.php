@@ -12,11 +12,14 @@ Header template file
 $body_class = array();
 if (is_front_page()) {
 	$body_class[] = 'front';
-} else {
-	$body_class[] = 'no-splash';
 }
 if (is_admin_bar_showing()) {
 	$body_class[] = 'admin-bar';
+}
+if (is_active_sidebar('splash') && is_front_page()) {
+	$body_class[] = 'splash';
+} else {
+	$body_class[] = 'no-splash';
 }
 
 ?><!DOCTYPE html>
@@ -98,6 +101,14 @@ if (is_admin_bar_showing()) {
 				</div>
 			</div> <!-- close .grid -->
 		</header> <!-- close header#site-header -->
+
+		<?php if (is_active_sidebar('splash') && is_front_page()) : ?>
+		<div id="splash-holder">
+
+			<?php dynamic_sidebar('splash'); ?>
+			
+		</div>
+		<?php endif; ?>
 
 		<div id="content-wrapper">
 			<div id="content-body">

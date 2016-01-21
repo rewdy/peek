@@ -53,6 +53,19 @@ function peek_widget_init() {
 		)
 	);
 	
+	// Register drawer widgets
+	register_sidebar(
+		array(
+			'name' => __('Splash'),
+			'desc' => __('Only place a slideshow or large image in this area.'),
+			'id' => 'splash',
+			'before_widget' => '<div id="%1$s" class="%2$s">',
+			'after_widget' => '</div>',
+			'before_title' => '<h2 class="widget-title accessible-hide">',
+			'after_title' => '</h2>',
+		)
+	);
+	
 	// Register footer widgets
 	register_sidebar(
 		array(
