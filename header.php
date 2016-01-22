@@ -9,6 +9,10 @@ Header template file
 
 */
 
+// get featured image
+$featured_image = peek_featured_image();
+
+// build the body class array
 $body_class = array();
 if (is_front_page()) {
 	$body_class[] = 'front';
@@ -17,6 +21,8 @@ if (is_admin_bar_showing()) {
 	$body_class[] = 'admin-bar';
 }
 if (is_active_sidebar('splash') && is_front_page()) {
+	$body_class[] = 'splash';
+} else if ($featured_image) {
 	$body_class[] = 'splash';
 } else {
 	$body_class[] = 'no-splash';
@@ -103,7 +109,11 @@ if (is_active_sidebar('splash') && is_front_page()) {
 		<div id="splash-holder">
 
 			<?php dynamic_sidebar('splash'); ?>
-			
+
+		</div>
+		<?php elseif ($featured_image) : ?>
+		<div id="featured-image" style="background-image:url('<?php echo $featured_image['url']; ?>')">
+			<!-- featured image -->
 		</div>
 		<?php endif; ?>
 

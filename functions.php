@@ -52,7 +52,7 @@ function peek_widget_init() {
 			'after_title' => '</h2>'
 		)
 	);
-	
+
 	// Register drawer widgets
 	register_sidebar(
 		array(
@@ -65,7 +65,7 @@ function peek_widget_init() {
 			'after_title' => '</h2>',
 		)
 	);
-	
+
 	// Register footer widgets
 	register_sidebar(
 		array(
@@ -190,12 +190,15 @@ add_action('wp_head', 'peek_custom_header_image');
 function peek_featured_image() {
 	$image = array();
 
-	if (get_the_post_thumbnail() != '') {
-		// get the URL of the featured image
-		$header_image = wp_get_attachment_image_src(get_post_thumbnail_id(), 'page-header');
-		$image['url'] = $header_image[0];
-		$image['width'] = $header_image[1];
-		$image['height'] = $header_image[2];
+	// Only check if singular
+	if (is_singular()) {
+		if (get_the_post_thumbnail() != '') {
+			// get the URL of the featured image
+			$header_image = wp_get_attachment_image_src(get_post_thumbnail_id(), 'page-header');
+			$image['url'] = $header_image[0];
+			$image['width'] = $header_image[1];
+			$image['height'] = $header_image[2];
+		}
 	}
 
 	return (!empty($image)) ? $image : false;
