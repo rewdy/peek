@@ -19,8 +19,10 @@ add_theme_support('automatic-feed-links');
 // Enable post thumbnails
 add_theme_support('post-thumbnails');
 
-// Add some image sizes for post thumbnails
-add_image_size('page-header', 1400, 1050, true);
+// Add some image sizes for featured images
+add_image_size('featured-image', 1600, 800, true);
+add_image_size('featured-image-small', 900, 450, true);
+// Add images sizes for gallery thumbnails
 add_image_size('proportional-gallery-thumbnail', 600, 1800); // 600px wide, up to 3 times as tall. No crop so should be like only setting the width
 add_image_size('square-gallery-thumbnail', 600, 600, true);
 add_image_size('full-gallery-thumbnail', 1600, 1040, true);
@@ -33,7 +35,7 @@ if (function_exists('register_nav_menu')) {
 
 // Content width
 if (!isset($content_width)) {
-	$content_width = 864;
+	$content_width = 724;
 }
 
 /**
@@ -85,45 +87,6 @@ add_action('widgets_init', 'peek_widget_init');
 /**
  * Custom Settings
  */
-
-// Custom Header Image
-function peek_custom_header_setup() {
-	$header_args = array(
-		'default-image'			=> '%s/img/headers/perfect-vacation.jpg',
-		'default-text-color'	=> 'ffffff',
-		'width'					=> 1400,
-		'height'				=> 1050,
-		'flex-height' 			=> false,
-		'flex-width'			=> false,
-		'uploads'				=> true,
-	);
-	add_theme_support('custom-header', $header_args);
-}
-add_action('after_setup_theme', 'peek_custom_header_setup');
-
-// Custom Header Options
-$header_options = array(
-	'vacation' 		=> array(
-		'url' 			=> '%s/img/headers/perfect-vacation.jpg',
-		'thumbnail_url'	=> '%s/img/headers/perfect-vacation-thumbnail.jpg',
-		'description' 	=> __('Perfect Vacation'),
-	),
-	'coffee' 	=> array(
-		'url' 			=> '%s/img/headers/blue-bottle-coffee.jpg',
-		'thumbnail_url'	=> '%s/img/headers/blue-bottle-coffee-thumbnail.jpg',
-		'description' 	=> __('Blue Bottle Coffee'),
-	),
-	'sky' 	=> array(
-		'url' 			=> '%s/img/headers/big-sky.jpg',
-		'thumbnail_url'	=> '%s/img/headers/big-sky-thumbnail.jpg',
-		'description' 	=> __('Big Sky'),
-	),
-);
-register_default_headers($header_options);
-
-/**
- * Settings
- */
 class Peek_Customize {
 	public static function register($wp_customize) {
 		// add the sections
@@ -162,30 +125,6 @@ class Peek_Customize {
 }
 add_action('customize_register', array('Peek_Customize', 'register'));
 
-if (!function_exists('peek_custom_header_image')) :
-// custom header image function
-function peek_custom_header_image() {
-
-	$processed = array();
-
-	// get the header image; this is the default.
-	$header_image = get_custom_header();
-
-	if ($header_image != '') {
-		$processed['url'] = $header_image->url;
-		$processed['width'] = $header_image->width;
-		$processed['height'] = $header_image->height;
-	}
-
-	// if $header_image is an empty string, set it to false.
-	$processed = (empty($processed)) ? false : $processed;
-
-	return $processed;
-
-}
-endif; // peek_custom_header_image
-add_action('wp_head', 'peek_custom_header_image');
-
 // function to return the feature image
 function peek_featured_image() {
 	$image = array();
@@ -194,10 +133,10 @@ function peek_featured_image() {
 	if (is_singular()) {
 		if (get_the_post_thumbnail() != '') {
 			// get the URL of the featured image
-			$header_image = wp_get_attachment_image_src(get_post_thumbnail_id(), 'page-header');
-			$image['url'] = $header_image[0];
-			$image['width'] = $header_image[1];
-			$image['height'] = $header_image[2];
+			$featured_image = wp_get_attachment_image_src(get_post_thumbnail_id(), 'featured-image');
+			$image['url'] = $featured_image[0];
+			$image['width'] = $featured_image[1];
+			$image['height'] = $featured_image[2];
 		}
 	}
 
@@ -218,8 +157,6 @@ function peek_lazy_load_holder_src() {
 /**
  * Comment mods because the defaults here suck
  */
-
-// Custom comment output
 function peek_comment($comment, $args, $depth) {
 		$GLOBALS['comment'] = $comment;
 		extract($args, EXTR_SKIP);

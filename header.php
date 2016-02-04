@@ -20,9 +20,7 @@ if (is_front_page()) {
 if (is_admin_bar_showing()) {
 	$body_class[] = 'admin-bar';
 }
-if (is_active_sidebar('splash') && is_front_page()) {
-	$body_class[] = 'splash';
-} else if ($featured_image) {
+if ($featured_image) {
 	$body_class[] = 'splash';
 } else {
 	$body_class[] = 'no-splash';
@@ -104,16 +102,15 @@ if (is_active_sidebar('splash') && is_front_page()) {
 				</div>
 			</div> <!-- close .grid -->
 		</header> <!-- close header#site-header -->
-
-		<?php if (is_active_sidebar('splash') && is_front_page()) : ?>
-		<div id="splash-holder">
-
-			<?php dynamic_sidebar('splash'); ?>
-
-		</div>
-		<?php elseif ($featured_image) : ?>
+		
+		<?php if ($featured_image) : ?>
 		<div id="featured-image" style="background-image:url('<?php echo $featured_image['url']; ?>')">
 			<!-- featured image -->
+			<div class="grid">
+				<div class="g12">
+					<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+				</div>
+			</div>
 		</div>
 		<?php endif; ?>
 

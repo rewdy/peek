@@ -61,7 +61,7 @@ as there is a lot of overlap between the two.
 @gutter:2em;
 @totalcol:12;
 
-@breakpoint: 640px; // point at which columns stack
+@breakpoint: 728px; // point at which columns stack
 @breakpoint-sm: @breakpoint; // point at which columns stack
 @breakpoint-md: 1024px; // point at which columns stack
 
@@ -131,24 +131,19 @@ body.splash #site-header {
 		}
 	}
 }
-#splash-holder,
 #featured-image {
-	position:absolute;
-	top:0;
-	left:0;
-	right:0;
-	bottom:0;
+	padding:24% 0 16%;
 	background-color:@accent;
 	color:#fff;
 	a {
 		color:#fff;
 	}
-}
-body.splash #content-wrapper {
-	position:absolute;
-	top:100%;
-	left:0;
-	width:100%;
+	h1.entry-title {
+		margin:0;
+	}
+	@media only screen and (max-width:@breakpoint) {
+		padding:220px 0 120px 0;
+	}
 }
 #site-header + #content-wrapper {
 	margin-top:6.25em;
@@ -186,7 +181,6 @@ img {
 	}
 }
 
-#splash-holder,
 #featured-image {
 	background-size:cover;
 	background-position:center 0;

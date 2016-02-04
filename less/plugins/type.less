@@ -24,13 +24,12 @@ h1, h2, h3, h4, h5, h6, #site-title {
 	}
 }
 
-h1,
-#site-title {
-	font-size:2em;
+h1 {
+	font-size:2.5em;
 	font-family:@heading;
 	font-weight:@fontweightbold;
-	@media only screen and (max-width:@breakpoint) {
-		font-size:2.5em;
+	@media only screen and (min-width:@breakpoint-md) {
+		font-size:3em;
 	}
 }
 h2 {
