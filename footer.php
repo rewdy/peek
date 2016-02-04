@@ -28,12 +28,6 @@ Footer template file
 
 		</div> <!-- close #content-wrapper -->
 
-		<?php
-		if (is_single()) {
-			include 'includes/photoswipe_element.php';
-		}
-		?>
-
 		<?php wp_footer(); ?>
 
 	</body>

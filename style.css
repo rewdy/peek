@@ -7,5 +7,5 @@ Description: A theme for photography websites.
 Version: 1.0
 */
 
-@import url(lib/font-awesome-4.1.0/css/font-awesome.min.css);
 @import url(css/theme.css);
+@import url(lib/font-awesome-4.5.0/css/font-awesome.min.css);

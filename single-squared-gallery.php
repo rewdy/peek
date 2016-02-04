@@ -20,19 +20,6 @@ WP Post Template: Squared image gallery
 							<?php
 							$galleryimages = get_attachments_gallery('square');
 							if ($galleryimages) :
-
-							/*
-
-							ADD JS HERE TO INITIALIZE; USE PHP TO GET ARRAY OF ITEMS;
-							// if photoswipe should be enabled
-							if (jQuery('.pswp-triggers').length) {
-								// pswp element
-								var pswpElement = document.querySelectorAll('.pswp')[0];
-
-								var items
-							}
-							*/
-
 							?>
 							<div id="photo-grid" class="photo-grid pswp-triggers row">
 							<?php foreach($galleryimages as $image) : ?>
