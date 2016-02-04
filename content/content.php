@@ -40,7 +40,7 @@ if (get_the_post_thumbnail() != '') {
 
 		<?php if ($featured_image) : ?>
 		<div class="featured-image">
-			<img src="<?php echo $featured_image['url']; ?>" width="<?php echo $featured_image['width']; ?>" height="<?php echo $featured_image['height']; ?>" alt="" />
+			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><img src="<?php echo $featured_image['url']; ?>" width="<?php echo $featured_image['width']; ?>" height="<?php echo $featured_image['height']; ?>" alt="" /></a>
 		</div>
 		<?php endif; ?>
 		
