@@ -12,6 +12,7 @@ From the Gallery plugin
 
 ?>
 <?php get_header(); ?>
+
 	<div id="primary" class="content-area">
 		<div id="container" class="site-content site-main">
 			<div id="content" class="hentry">

@@ -59,7 +59,22 @@ if ($featured_image) {
 		// pull in the site js
 		wp_enqueue_script('peek_interactions', get_template_directory_uri() . '/js/peek-interactions.js', 'jquery', false, true);
 		wp_enqueue_script('peek_animations', get_template_directory_uri() . '/js/peek-animations.js', 'jquery', false, true);
-
+		
+		function lazy_load_init_script() {
+		?>
+		<script type="text/javascript">
+			jQuery(function() {
+				jQuery("img").unveil();
+			});
+		</script>
+		<?php
+		}
+		if (peek_lazy_load_enabled()) {
+			// pull in unveil library
+			wp_enqueue_script('jquery_unveil', get_template_directory_uri() . '/lib/jquery.unveil.js', 'jquery', false, true);
+			// pull in init script
+			add_action('wp_footer', 'lazy_load_init_script', 200);
+		}
 		// comment script
 		if (is_singular() && get_option('thread_comments')) :
 			wp_enqueue_script('comment-reply');
@@ -93,6 +108,8 @@ if ($featured_image) {
 				</div>
 			</div> <!-- close .grid -->
 		</header> <!-- close header#site-header -->
+		
+		<?php include "front-gallery.inc.php"; ?>
 		
 		<?php if ($featured_image) : ?>
 		<div id="featured-image" style="background-image:url('<?php echo $featured_image['url']; ?>')">

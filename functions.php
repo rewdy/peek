@@ -79,7 +79,7 @@ class Peek_Customize {
 		// add the sections
 		$wp_customize->add_section('peek_options',
 			array(
-				'title'			=> __('Display Options', 'peek'),
+				'title'			=> __('Peek Theme Options', 'peek'),
 				'priority'		=> 55,
 				'capability'	=> 'edit_theme_options',
 				'description' 	=> __('Enable certain features of the theme.', 'peek')
@@ -131,6 +131,70 @@ class Peek_Customize {
 				),
 			)
 		);
+		
+		if (is_plugin_active('gallery-plugin/gallery-plugin.php')) {
+			
+			// Show front page gallery setting
+			$wp_customize->add_setting('peek_show_front_gallery',
+				array(
+					'default' 	=> 0,
+					'type'		=> 'option',
+					'capability'=> 'edit_theme_options',
+					'transport'	=> 'refresh',
+				)
+			);
+			// Show front page gallery control
+			$wp_customize->add_control('peek_show_front_gallery',
+				array(
+					'label'   => 'Should a gallery be shown on the front page?',
+					'description' => __('If you would like to display a Gallery Plugin gallery on the front page, select "Yes".'),
+					'section' => 'peek_options',
+					'type'    => 'radio',
+					'choices'    => array(
+						1 => 'Yes',
+						0 => 'No',
+					),
+				)
+			);
+			
+			// Show front page gallery setting
+			$wp_customize->add_setting('peek_front_gallery_id',
+				array(
+					'default' 	=> 0,
+					'type'		=> 'option',
+					'capability'=> 'edit_theme_options',
+					'transport'	=> 'refresh',
+				)
+			);
+			// Show front page gallery control
+			$args = array(
+				'post_type'				=> 'gallery',
+				'post_status'			=> 'publish',
+				'posts_per_page'		=> -1
+			);
+			// run a query to get the gallery options
+			$galleries_query = new WP_Query( $args );
+			if ( $galleries_query->have_posts() ) {
+				$gallery_choices = array();
+				while ( $galleries_query->have_posts() ) : $galleries_query->the_post();
+					$gallery_choices[get_the_id()] = get_the_title();
+				endwhile;
+			} else {
+				$gallery_choices = array(
+					'0' => 'None available',
+				);
+			}
+			$wp_customize->add_control('peek_front_gallery_id',
+				array(
+					'label'   => 'Select a gallery',
+					'description' => __('Select a gallery. If a new gallery is needed, create it then return to this page to select it.'),
+					'section' => 'peek_options',
+					'type'    => 'select',
+					'choices'    => $gallery_choices,
+				)
+			);
+			
+		}
 	}
 }
 add_action('customize_register', array('Peek_Customize', 'register'));
@@ -196,6 +260,22 @@ function peek_lazy_load_holder_src() {
 }
 function peek_show_home_title() {
 	return get_option('peek_show_home_title');
+}
+
+/**
+ * Front Page Gallery Functions
+ */
+function peek_front_gallery() {
+	$enabled = get_option('peek_show_front_gallery');
+	$gallery_id = get_option('peek_front_gallery_id');
+	// check if enabled and if gallery id is not 0.
+	if ($enabled && $gallery_id) {
+		// return the id
+		return $gallery_id;
+	} else {
+		// if the gallery is disabled or no gallery is selected, return false
+		return false;
+	}
 }
 
 /**

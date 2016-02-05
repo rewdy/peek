@@ -15,23 +15,6 @@ $peek_thumbnail_style = 'square-gallery-thumbnail';
 $peek_large_style = 'large'; // built-in style
 $peek_full_style = 'full'; // built-in style
 
-function lazy_load_init_script() {
-?>
-<script type="text/javascript">
-	jQuery(function() {
-		jQuery("img").unveil();
-	});
-</script>
-<?php
-}
-if (peek_lazy_load_enabled()) {
-	// pull in unveil library
-	wp_enqueue_script('jquery_unveil', get_template_directory_uri() . '/lib/jquery.unveil.js', 'jquery', false, true);
-	// pull in init script
-	add_action('wp_footer', 'lazy_load_init_script', 200);
-}
-
-?>
 <?php get_header(); ?>
 
 	<article id="gallery-post-<?php the_ID(); ?>" <?php post_class($extra_post_classes); ?>>
