@@ -356,8 +356,12 @@ article.post.listed {
 	}
 }
 // front page gallery
+@rowHeight: 300px;
+@totalHeight: 2 * @rowHeight;
 #gallery-splash {
-
+	background-color:@color;
+	max-height:@totalHeight;
+	overflow:hidden;
 }
 .photo-grid-horizontal {
 	display:flex;
@@ -367,7 +371,7 @@ article.post.listed {
 	.photo-item {
 		flex-grow:1;
 		min-width:20%;
-		max-height:300px;
+		max-height:@rowHeight;
 		margin:0;
 		background-size:cover;
 		background-position:center;
