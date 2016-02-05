@@ -111,9 +111,6 @@ body.splash #site-header {
 	.gradient(rgba(0,0,0,0.5), rgba(0,0,0,0));
 	a {
 		color:#fff;
-		-webkit-text-shadow:0 0 1em fade(#000, 50%);
-		-moz-text-shadow:0 0 1em fade(#000, 50%);
-		-ms-text-shadow:0 0 1em fade(#000, 50%);
 		text-shadow:0 0 1em fade(#000, 50%);
 		.transition;
 	}
@@ -121,9 +118,6 @@ body.splash #site-header {
 		background:#fff none;
 		a {
 			color:@color;
-			-webkit-text-shadow:none;
-			-moz-text-shadow:none;
-			-ms-text-shadow:none;
 			text-shadow:none;
 		}
 		@media only screen and (max-width:@breakpoint) {
@@ -261,6 +255,14 @@ img {
 @media only screen and (max-width:@breakpoint) {
 	#nav-holder {
 		display:none;
+	}
+}
+.splash #nav-holder ul.menu li {
+	a {
+		color:lighten(@menulinkcolor, 15%);
+	}
+	&.current-menu-item a {
+		color:@color;
 	}
 }
 .whited #nav-holder ul.menu li a {
