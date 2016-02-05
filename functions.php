@@ -55,19 +55,6 @@ function peek_widget_init() {
 		)
 	);
 
-	// Register drawer widgets
-	register_sidebar(
-		array(
-			'name' => __('Splash'),
-			'desc' => __('Only place a slideshow or large image in this area.'),
-			'id' => 'splash',
-			'before_widget' => '<div id="%1$s" class="%2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h2 class="widget-title accessible-hide">',
-			'after_title' => '</h2>',
-		)
-	);
-
 	// Register footer widgets
 	register_sidebar(
 		array(
@@ -121,11 +108,36 @@ class Peek_Customize {
 				),
 			)
 		);
+
+		// Show home page title setting
+		$wp_customize->add_setting('peek_show_home_title',
+			array(
+				'default' 	=> 0,
+				'type'		=> 'option',
+				'capability'=> 'edit_theme_options',
+				'transport'	=> 'refresh',
+			)
+		);
+		// Show home page title control
+		$wp_customize->add_control('peek_show_home_title',
+			array(
+				'label'   => 'Show the page title on the home page?',
+				'description' => __('When a static page is set as the home page, the title is hidden unless this option is set to "yes".'),
+				'section' => 'peek_options',
+				'type'    => 'radio',
+				'choices'    => array(
+					1 => 'Yes',
+					0 => 'No',
+				),
+			)
+		);
 	}
 }
 add_action('customize_register', array('Peek_Customize', 'register'));
 
-// function to return the feature image
+/**
+ * function to return the feature image
+ */
 function peek_featured_image() {
 	$image = array();
 
@@ -143,6 +155,35 @@ function peek_featured_image() {
 	return (!empty($image)) ? $image : false;
 }
 
+/**
+ * Function to get the post title
+ */
+function peek_get_post_title() {
+	$title = get_the_title();
+	$output = false;
+	if ( !is_singular() ) {
+		// if listed
+		$permalink = get_permalink();
+		$output = '<h2 class="entry-title"><a href="' . $permalink . '" rel="bookmark">' . $title . '</a></h2>';
+	}
+	else if (is_front_page()) {
+		// if front page
+		if (peek_show_home_title()) {
+			$output = '<h1 class="entry-title">' . $title . '</h1>';
+		}
+	}
+	else if (!peek_featured_image()) {
+		// if is singular
+		// if not the front page
+		// if not featured image
+		$output = '<h1 class="entry-title">' . $title . '</h1>';
+	}
+
+	return $output;
+}
+function peek_the_post_title() {
+	echo peek_get_post_title();
+}
 
 /**
  * Functions to return values to the theme
@@ -152,6 +193,9 @@ function peek_lazy_load_enabled() {
 }
 function peek_lazy_load_holder_src() {
 	return get_template_directory_uri() . '/img/loader.gif';
+}
+function peek_show_home_title() {
+	return get_option('peek_show_home_title');
 }
 
 /**

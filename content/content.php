@@ -30,11 +30,7 @@ if (get_the_post_thumbnail() != '') {
 
 	<div class="content">
 		<?php
-			if ( !is_singular() ) :
-				the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
-			elseif (!$featured_image) :
-				the_title( '<h1 class="entry-title">', '</h1>' );
-			endif;
+			peek_the_post_title();
 		?>
 		<?php if (!is_singular()) : ?>
 
@@ -43,7 +39,7 @@ if (get_the_post_thumbnail() != '') {
 			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><img src="<?php echo $featured_image['url']; ?>" width="<?php echo $featured_image['width']; ?>" height="<?php echo $featured_image['height']; ?>" alt="" /></a>
 		</div>
 		<?php endif; ?>
-		
+
 		<?php the_excerpt(); ?>
 		<p class="more-link"><a href="<?php the_permalink(); ?>"><?php _e( 'Keep reading<span class="meta-nav">&hellip;</span>', 'peek' ); ?></a></p>
 
