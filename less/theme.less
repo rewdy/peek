@@ -357,27 +357,20 @@ article.post.listed {
 }
 // front page gallery
 #gallery-splash {
-	height:900px;
-	background-color:@color;
-	@media only screen and (max-width:@breakpoint-md) {
-		height:600px;
-	}
-	@media only screen and (max-width:@breakpoint-sm) {
-		height:300px;
-	}
+
 }
 .photo-grid-horizontal {
-	width:100%;
+	display:flex;
+	flex-flow:row wrap;
+	align-items:stretch;
+	align-content:stretch;
 	.photo-item {
-		height:300px;
-		float:left;
+		flex-grow:1;
+		min-width:20%;
+		max-height:300px;
 		margin:0;
 		background-size:cover;
 		background-position:center;
-		img {
-			display:block;
-			margin:0;
-		}
 	}
 }
 

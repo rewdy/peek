@@ -50,41 +50,6 @@ if ($gallery_id) :
 
 		if ( $image_query->have_posts() ) {
 			$count_image_block = 0; 
-			
-			// pull in Freewall
-			wp_enqueue_script('freewall', get_template_directory_uri() . '/lib/freewall.min.js', 'jquery', '1.0.5', true);	
-			
-			function peek_freewall_front_init() {
-				?>
-			<script>
-				jQuery(function() {
-					var wall = new Freewall(".photo-grid-horizontal");
-					wall.reset({
-						selector: '.photo-item',
-						animate: true,
-						cellH: 300,
-						cellW: 300,
-						gutterX: 0,
-						gutterY: 0,
-						onResize: function() {
-							winWidth = jQuery(window).width();
-							wallHeight = 900;
-							if (winWidth < 728) {
-								wallHeight = 300;
-							} else if (winWidth <= 1024) {
-								wallHeight = 600;
-							} 
-							wall.fitZone(winWidth, wallHeight);
-						}
-					});
-					jQuery(window).load(function() {
-						jQuery(window).trigger('resize');
-					});
-				});
-			</script>
-				<?php
-			}
-			add_action('wp_footer', 'peek_freewall_front_init', 220);
 		?>
 
 		<div class="photo-grid-horizontal">
@@ -98,7 +63,7 @@ if ($gallery_id) :
 		$image_attributes_full = wp_get_attachment_image_src( $attachment->ID, $peek_full_style );
 		?>
 
-			<div class="photo-item" style="background-image:url(<?php echo $image_attributes[0]; ?>); width:<?php echo $image_attributes[1] . 'px'; ?>; height:<?php echo $image_attributes[2] . 'px'; ?>;">
+			<div class="photo-item" style="width:<?php echo $image_attributes[1] . 'px'; ?>; height:<?php echo $image_attributes[2] . 'px'; ?>; background-image:url(<?php echo $image_attributes[0]; ?>);">
 				<!-- Image set with inline style -->
 			</div><!-- .photo-item -->
 		<?php $count_image_block++;
