@@ -33,16 +33,6 @@ jQuery(function($){
 
 function peek_gallery_script() {
 	
-	// jQuery('.photo-item').each(function(){
-	// 	var $me = jQuery(this);
-	// 	$me.addClass('loading');
-	// 	$me.find('img').one("load", function() {
-	// 		$me.removeClass('loading');
-	// 	}).each(function() {
-	// 		if(this.complete) jQuery(this).load();
-	// 	});
-	// });
-	
 	// if elements should be packed, do it.
 	if (jQuery('.packed').length) {
 		jQuery(window).load(function(){

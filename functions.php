@@ -24,6 +24,7 @@ add_image_size('featured-image', 1600, 800, true);
 add_image_size('featured-image-small', 900, 450, true);
 // Add images sizes for gallery thumbnails
 add_image_size('proportional-gallery-thumbnail', 600, 1800); // 600px wide, up to 3 times as tall. No crop so should be like only setting the width
+add_image_size('height-gallery-thumbnail', 1200, 300); // 300px tall, up to three times as width. No crop so should be like only setting the height
 add_image_size('square-gallery-thumbnail', 600, 600, true);
 add_image_size('full-gallery-thumbnail', 1600, 1040, true);
 

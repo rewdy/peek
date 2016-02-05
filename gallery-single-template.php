@@ -14,6 +14,7 @@ From the Gallery plugin
 $peek_thumbnail_style = 'square-gallery-thumbnail';
 $peek_large_style = 'large'; // built-in style
 $peek_full_style = 'full'; // built-in style
+?>
 
 <?php get_header(); ?>
 

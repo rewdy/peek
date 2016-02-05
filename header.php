@@ -22,6 +22,8 @@ if (is_admin_bar_showing()) {
 }
 if ($featured_image) {
 	$body_class[] = 'splash';
+} else if (peek_front_gallery() && is_front_page()) {
+	$body_class[] = 'splash';
 } else {
 	$body_class[] = 'no-splash';
 }
@@ -109,7 +111,7 @@ if ($featured_image) {
 			</div> <!-- close .grid -->
 		</header> <!-- close header#site-header -->
 		
-		<?php include "front-gallery.inc.php"; ?>
+		<?php if (is_front_page()) { include "front-gallery.inc.php"; } ?>
 		
 		<?php if ($featured_image) : ?>
 		<div id="featured-image" style="background-image:url('<?php echo $featured_image['url']; ?>')">

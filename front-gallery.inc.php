@@ -9,7 +9,7 @@ Template - Front page gallery
 
 */
 // Vars
-$peek_thumbnail_style = 'square-gallery-thumbnail';
+$peek_thumbnail_style = 'height-gallery-thumbnail';
 $peek_large_style = 'large'; // built-in style
 $peek_full_style = 'full'; // built-in style
 
@@ -30,7 +30,7 @@ if ($gallery_id) :
 	?>
 	
 	<div id="gallery-splash">
-		<div class="grid">
+		
 	<?php while ( $gallery_query->have_posts() ) : $gallery_query->the_post();
 
 		$images_id = get_post_meta( $post->ID, '_gallery_images', true );
@@ -49,9 +49,45 @@ if ($gallery_id) :
 		$image_query = new WP_Query( $image_args );
 
 		if ( $image_query->have_posts() ) {
-			$count_image_block = 0; ?>
+			$count_image_block = 0; 
+			
+			// pull in Freewall
+			wp_enqueue_script('freewall', get_template_directory_uri() . '/lib/freewall.min.js', 'jquery', '1.0.5', true);	
+			
+			function peek_freewall_front_init() {
+				?>
+			<script>
+				jQuery(function() {
+					var wall = new Freewall(".photo-grid-horizontal");
+					wall.reset({
+						selector: '.photo-item',
+						animate: true,
+						cellH: 300,
+						cellW: 300,
+						gutterX: 0,
+						gutterY: 0,
+						onResize: function() {
+							winWidth = jQuery(window).width();
+							wallHeight = 900;
+							if (winWidth < 728) {
+								wallHeight = 300;
+							} else if (winWidth <= 1024) {
+								wallHeight = 600;
+							} 
+							wall.fitZone(winWidth, wallHeight);
+						}
+					});
+					jQuery(window).load(function() {
+						jQuery(window).trigger('resize');
+					});
+				});
+			</script>
+				<?php
+			}
+			add_action('wp_footer', 'peek_freewall_front_init', 220);
+		?>
 
-		<div id="photo-grid" class="row">
+		<div class="photo-grid-horizontal">
 		<?php while ( $image_query->have_posts() ) : $image_query->the_post();
 		$attachment = $post;
 		$key = "gllr_image_text";
@@ -62,27 +98,17 @@ if ($gallery_id) :
 		$image_attributes_full = wp_get_attachment_image_src( $attachment->ID, $peek_full_style );
 		?>
 
-		<div class="photo-item g4">
-			<?php if (peek_lazy_load_enabled()) : ?>
-				
-			<img alt="<?php echo get_post_meta( $attachment->ID, $alt_tag_key, true ); ?>" title="<?php echo get_post_meta( $attachment->ID, $key, true ); ?>" src="<?php echo peek_lazy_load_holder_src(); ?>" data-src="<?php echo $image_attributes[0]; ?>" rel="<?php echo $image_attributes_full[0]; ?>" />
-			
-			<?php else : ?>
-				
-			<img alt="<?php echo get_post_meta( $attachment->ID, $alt_tag_key, true ); ?>" title="<?php echo get_post_meta( $attachment->ID, $key, true ); ?>" src="<?php echo $image_attributes[0]; ?>" rel="<?php echo $image_attributes_full[0]; ?>" />
-			
-			<?php endif; ?>
-			
-		</div><!-- .photo-item -->
+			<div class="photo-item" style="background-image:url(<?php echo $image_attributes[0]; ?>); width:<?php echo $image_attributes[1] . 'px'; ?>; height:<?php echo $image_attributes[2] . 'px'; ?>;">
+				<!-- Image set with inline style -->
+			</div><!-- .photo-item -->
 		<?php $count_image_block++;
 		endwhile;  ?>
-		</div><!-- #photo-grid.row -->
+		</div><!-- .photo-grid-horizontal -->
 		<?php } ?>
 	<?php endwhile; 
 		
 	?>
 	
-		</div>
 	</div> <!-- close #gallery-splash -->
 	
 <?php endif;
