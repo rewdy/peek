@@ -6,7 +6,7 @@ jQuery(function($){
 	
 	// Drawer toggle
 	$('a.drawer-link').click(function(){
-		$('#control').toggleClass('open');
+		$('body').toggleClass('show-drawer');
 		return false;
 	});
 

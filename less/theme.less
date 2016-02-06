@@ -62,6 +62,7 @@ as there is a lot of overlap between the two.
 @totalcol:12;
 
 @breakpoint: 728px; // point at which columns stack
+@breakpoint-xs: 400px;
 @breakpoint-sm: @breakpoint; // point at which columns stack
 @breakpoint-md: 1024px; // point at which columns stack
 
@@ -160,6 +161,65 @@ img {
 	height:auto;
 }
 
+@drawerWidth:350px;
+#drawer {
+	position:fixed;
+	top:0;
+	left:-@drawerWidth;
+	bottom:0;
+	width:@drawerWidth;
+	z-index:100;
+	padding:1em;
+	background-color:fade(@color, 95%);
+	color:#ccc;
+	box-sizing:border-box;
+	transition:transform 200ms ease-in-out;
+	a {
+		color:#e6e6e6;
+		text-decoration:none;
+	}
+	.drawer-closer {
+		margin-bottom:1em;
+	}
+	a.drawer-link {
+		display:inline-block;
+		padding:0.25em 0.75em;
+		border:1px solid lighten(@color, 10%);
+	}
+	.widget {
+		margin-bottom:@lineheight;
+	}
+	ul.menu {
+		margin:0;
+		li {
+			list-style:none;
+			margin:0;
+			padding:0;
+			a {
+				display:block;
+				padding:0.35em 0;
+				font-size:1.25em;
+				&:hover {
+					text-decoration:underline;
+				}
+			}
+		}
+	}
+	@media only screen and (max-width:@breakpoint-xs) {
+		width:100%;
+		left:-100%;
+	}
+}
+.show-drawer #drawer {
+	transform:translateX(@drawerWidth);
+	@media only screen and (max-width:@breakpoint-xs) {
+		transform:translateX(100%);
+	}
+}
+.admin-bar #drawer {
+	top:32px;
+}
+
 /*
 3. Sections
 -----------
@@ -170,6 +230,9 @@ img {
 	position:relative;
 	top:0.35em;
 	margin-right:0.5em;
+	// make a bigger hit area
+	padding:1em 1.65em;
+	margin:-1em -1.15em -1em -1.65em;
 	.text {
 		.accessible-hide;
 	}

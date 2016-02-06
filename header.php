@@ -111,6 +111,8 @@ if ($featured_image) {
 			</div> <!-- close .grid -->
 		</header> <!-- close header#site-header -->
 		
+		<?php get_sidebar('drawer'); ?>
+		
 		<?php if (is_front_page()) { include "front-gallery.inc.php"; } ?>
 		
 		<?php if ($featured_image) : ?>
