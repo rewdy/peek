@@ -13,7 +13,9 @@ Footer template file
 					</div>
 				</div> <!-- close .grid.row -->
 			</div> <!-- close #content-body -->
-
+			
+			<?php get_sidebar('drawer'); ?>
+			
 			<footer id="site-footer">
 				<div class="grid">
 					<?php get_sidebar('footer'); ?>
