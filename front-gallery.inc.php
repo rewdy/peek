@@ -14,23 +14,24 @@ $peek_large_style = 'large'; // built-in style
 $peek_full_style = 'full'; // built-in style
 
 $gallery_id = peek_front_gallery();
+
 if ($gallery_id) :
 
 	$args = array(
 		'post_type'			=> 'gallery',
 		'post_status'		=> 'publish',
-		'id'				=> $gallery_id,
+		'p'					=> $gallery_id,
 		'posts_per_page'	=> 1,
 	);
 	$gallery_query = new WP_Query( $args );
-	
+
 	$gllr_options = get_option( 'gllr_options' );
-	
+
 	if ( $gallery_query->have_posts() ) :
 	?>
-	
+
 	<div id="gallery-splash">
-		
+
 	<?php while ( $gallery_query->have_posts() ) : $gallery_query->the_post();
 
 		$images_id = get_post_meta( $post->ID, '_gallery_images', true );
@@ -49,7 +50,7 @@ if ($gallery_id) :
 		$image_query = new WP_Query( $image_args );
 
 		if ( $image_query->have_posts() ) {
-			$count_image_block = 0; 
+			$count_image_block = 0;
 		?>
 
 		<div class="photo-grid-horizontal">
@@ -70,12 +71,12 @@ if ($gallery_id) :
 		endwhile;  ?>
 		</div><!-- .photo-grid-horizontal -->
 		<?php } ?>
-	<?php endwhile; 
-		
+	<?php endwhile;
+
 	?>
-	
+
 	</div> <!-- close #gallery-splash -->
-	
+
 <?php endif;
 endif;
 
