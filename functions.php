@@ -132,9 +132,9 @@ class Peek_Customize {
 				),
 			)
 		);
-		
+
 		if (is_plugin_active('gallery-plugin/gallery-plugin.php')) {
-			
+
 			// Show front page gallery setting
 			$wp_customize->add_setting('peek_show_front_gallery',
 				array(
@@ -157,7 +157,7 @@ class Peek_Customize {
 					),
 				)
 			);
-			
+
 			// Show front page gallery setting
 			$wp_customize->add_setting('peek_front_gallery_id',
 				array(
@@ -167,6 +167,17 @@ class Peek_Customize {
 					'transport'	=> 'refresh',
 				)
 			);
+
+			// Hide front gallery from listing
+			$wp_customize->add_setting('peek_hide_front_gallery',
+				array(
+					'default' 	=> 1,
+					'type'		=> 'option',
+					'capability'=> 'edit_theme_options',
+					'transport'	=> 'refresh',
+				)
+			);
+
 			// Show front page gallery control
 			$args = array(
 				'post_type'				=> 'gallery',
@@ -194,7 +205,19 @@ class Peek_Customize {
 					'choices'    => $gallery_choices,
 				)
 			);
-			
+			// Should front gallery be excluded from gallery list
+			$wp_customize->add_control('peek_hide_front_gallery',
+				array(
+					'label'   => 'Exclude from gallery listing?',
+					'description' => __('Should the gallery selected as the front page gallery be hidden from the gallery listing?'),
+					'section' => 'peek_options',
+					'type'    => 'radio',
+					'choices'    => array(
+						1 => 'Hide it',
+						0 => 'Show it',
+					),
+				)
+			);
 		}
 	}
 }
@@ -276,6 +299,22 @@ function peek_front_gallery() {
 	} else {
 		// if the gallery is disabled or no gallery is selected, return false
 		return false;
+	}
+}
+
+/**
+ * Get IDs to exclude from gallery listing
+ */
+function peek_gallery_exclude_ids() {
+	$hidden = get_option('peek_hide_front_gallery');
+	$gallery_id = get_option('peek_front_gallery_id');
+	// check if enabled and if gallery id is not 0.
+	if ($hidden && $gallery_id) {
+		// return the id
+		return array($gallery_id);
+	} else {
+		// if the gallery is disabled or no gallery is selected, return false
+		return array();
 	}
 }
 

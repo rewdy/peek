@@ -468,6 +468,21 @@ ul.photo-block-list {
 	color:#ccc;
 }
 
+ul.gallery-listing {
+	margin:0 0 @lineheight 0;
+	li {
+		margin:0 0 @lineheight 0;
+		list-style:none;
+		&:after {
+			.clearfixed;
+		}
+	}
+	.gallery-thumbnail {
+		float:left;
+		margin:0 @lineheight 0 0;
+	}
+}
+
 // third parties
 @import "plugins/flexslider/flexslider.less";
 
